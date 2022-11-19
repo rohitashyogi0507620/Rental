@@ -1,9 +1,11 @@
 package com.example.mapwork
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -15,7 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolylineClickListener,
-    GoogleMap.OnPolygonClickListener ,OnMapsSdkInitializedCallback {
+    GoogleMap.OnPolygonClickListener, OnMapsSdkInitializedCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -28,12 +30,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
     private val PATTERN_POLYLINE_DOTTED = listOf(GAP, DOT)
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        MapsInitializer.initialize(applicationContext,MapsInitializer.Renderer.LATEST,this)
+        MapsInitializer.initialize(applicationContext, MapsInitializer.Renderer.LATEST, this)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -45,27 +46,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetCallback() {
             override fun onStateChanged(view: View, i: Int) {
-                Log.d("BottomSheet","State Change ${i.toString()}")
+                Log.d("BottomSheet", "State Change ${i.toString()}")
 
             }
 
             override fun onSlide(view: View, v: Float) {
-                Log.d("BottomSheet",v.toString())
+                Log.d("BottomSheet", v.toString())
             }
         })
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
 
+        bottomSheetDialog()
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    fun bottomSheetDialog() {
+        var dialog = Dialog(this)
+        dialog.setContentView(R.layout.layout_room_full_view)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -73,7 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         val sydney = LatLng(26.858631, 75.818909)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL)
+        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
 
         val polyline1 = googleMap.addPolyline(
             PolylineOptions()
@@ -86,7 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
                     LatLng(26.860458, 75.806558)
                 )
         )
-        polyline1.tag="Your Area"
+        polyline1.tag = "Your Area"
         stylePolyline(polyline1)
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(26.860956, 75.806386), 13f))
 
@@ -102,7 +101,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
 //                )
 //        )
 //        polygon.tag="Your Area"
-       // stylePolygon(polygon)
+        // stylePolygon(polygon)
         // Set listeners for click events.
 
         // Set listeners for click events.
@@ -111,9 +110,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
 
 
     }
-
-
-
 
 
     // Poly Line
@@ -125,7 +121,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
             "A" -> {
                 // Use a custom bitmap as the cap at the start of the line.
                 polyline.startCap = CustomCap(
-                    BitmapDescriptorFactory.fromResource(android.R.drawable.ic_menu_camera), 10f)
+                    BitmapDescriptorFactory.fromResource(android.R.drawable.ic_menu_camera), 10f
+                )
             }
             "B" -> {
                 // Use a round cap at the start of the line.
@@ -176,8 +173,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         polygon.strokeColor = strokeColor
         polygon.fillColor = fillColor
     }
-
-
 
 
     override fun onPolylineClick(polyline: Polyline) {
