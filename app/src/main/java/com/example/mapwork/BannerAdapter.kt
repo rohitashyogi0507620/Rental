@@ -8,68 +8,73 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.example.mapwork.Banner
 import com.example.mapwork.R
-import com.example.mapwork.RoomItem
+import com.example.mapwork.Room
+import com.smarteist.autoimageslider.SliderView
 import com.smarteist.autoimageslider.SliderViewAdapter
 
 
-class BannerAdapter(var context: Context, var mBannerHomeScreenItems: List<RoomItem>) : SliderViewAdapter<BannerAdapter.SliderAdapterVH>() {
+class BannerAdapter(var context: Context, var banneritem: Banner) :
+    SliderViewAdapter<BannerAdapter.SliderAdapterVH>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup): SliderAdapterVH {
         val inflate: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_room_full_view, null)
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_slider_item, null)
         return SliderAdapterVH(inflate)
     }
 
     override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
-        val sliderItem: RoomItem = mBannerHomeScreenItems[position]
-//        Glide.with(context).load(sliderItem.BannerUrl)
-//            .listener(object : RequestListener<Drawable> {
-//                override fun onLoadFailed(
-//                    e: GlideException?,
-//                    model: Any?,
-//                    target: Target<Drawable>?,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    viewHolder.progressBar.visibility = View.VISIBLE
-//                    return false
-//                }
-//
-//                override fun onResourceReady(
-//                    resource: Drawable?,
-//                    model: Any?,
-//                    target: Target<Drawable>?,
-//                    dataSource: DataSource?,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    viewHolder.progressBar.visibility = View.GONE
-//                    return false
-//                }
-//            })
-//            .into(viewHolder.imageViewBackground)
-//
+        val imageUrl: String = banneritem.imageUrl.get(position)
 
-        viewHolder.imageViewBackground.setOnClickListener {
+        Glide.with(context).load(imageUrl)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?, model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    viewHolder.roomBannerProgress.visibility = View.VISIBLE
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    viewHolder.roomBannerProgress.visibility = View.GONE
+                    return false
+                }
+            })
+            .into(viewHolder.roomBanner)
+
+
+        viewHolder.roomBanner.setOnClickListener {
             Toast.makeText(context, "This is item in position $position", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun getCount(): Int {
-        return mBannerHomeScreenItems.size
+        return banneritem.imageUrl.size
     }
 
     inner class SliderAdapterVH(itemView: View) : ViewHolder(itemView) {
-        lateinit var itemView: View
-       lateinit var imageViewBackground: ImageView
-      lateinit  var progressBar: ProgressBar
+
+        var roomBanner: ImageView
+        var roomBannerProgress: ProgressBar
 
         init {
-         //   imageViewBackground = itemView.findViewById(R.id.banner_image)
-          //  progressBar = itemView.findViewById(R.id.banner_progressBar)
+            roomBanner = itemView.findViewById(R.id.room_banner_image)
+            roomBannerProgress = itemView.findViewById(R.id.room_banner_progress)
         }
     }
-
-
 
 }

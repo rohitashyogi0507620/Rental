@@ -15,23 +15,29 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/imageSlider"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:sliderAnimationDuration="600"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderAutoCycleEnabled="true"
-                app:sliderIndicatorAnimationDuration="600"
-                app:sliderIndicatorGravity="left|bottom"
-                app:sliderIndicatorMargin="15dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="#5A5A5A"
-                app:sliderIndicatorUnselectedColor="#FFF"
-                app:sliderScrollTimeInSec="1"
-                app:sliderStartAutoCycle="true" />
+                android:layout_height="wrap_content">
+
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/room_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorGravity="left|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="1dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderScrollTimeInSec="1"
+                    app:sliderStartAutoCycle="true" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,7 +139,6 @@
 
     </androidx.cardview.widget.CardView>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -157,15 +162,15 @@
         <androidx.cardview.widget.CardView
             style="@style/CardViewStyle"
             android:layout_width="0dp"
-            app:cardBackgroundColor="@color/purple_200"
             android:layout_height="match_parent"
-            android:layout_weight="6">
+            android:layout_weight="6"
+            app:cardBackgroundColor="@color/purple_200">
 
             <com.google.android.material.button.MaterialButton
-                app:elevation="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Buy 3200/Month" />
+                android:text="Buy 3200/Month"
+                app:elevation="0dp" />
 
         </androidx.cardview.widget.CardView>
 
@@ -181,4 +186,6 @@
                 app:srcCompat="@drawable/ic_next" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
+
+
 </LinearLayout>

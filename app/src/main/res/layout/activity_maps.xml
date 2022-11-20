@@ -8,26 +8,91 @@
 
         <include layout="@layout/layout_map" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_marginTop="?android:actionBarSize"
+    <RelativeLayout
+        app:behavior_peekHeight="200dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/bottomsheet_corner"
-        app:cardElevation="@dimen/cardview_default_elevation"
-        app:cardUseCompatPadding="true">
+        android:layout_above="@+id/bottom_sheet_behavior_id">
 
-        <LinearLayout
-            android:layout_margin="5dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/search_bar"
+            style="@style/CardViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?android:actionBarSize">
 
-            <ImageView
-                android:layout_margin="10dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    style="@style/TextAppearance.Material3.TitleMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="9"
+                    android:hint="Search Room near by "
+                    android:padding="@dimen/margin_5dp"></TextView>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/purple_200" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ll_item">
+
+            <androidx.cardview.widget.CardView
+                style="@style/CardViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_search" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10dp"
+                    android:src="@drawable/ic_my_location"
+                    app:tint="@color/purple_200" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                style="@style/CardViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10dp"
+                    app:srcCompat="@drawable/ic_option"
+                    app:tint="@color/purple_200" />
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/ll_item"
+            layout="@layout/layout_room_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+
+    </RelativeLayout>
 
 
     <androidx.constraintlayout.motion.widget.MotionLayout

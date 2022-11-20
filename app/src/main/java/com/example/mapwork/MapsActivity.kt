@@ -1,5 +1,6 @@
 package com.example.mapwork
 
+import `in`.probusinsurance.app.Home.ProductData.BannerAdapter
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,6 +15,9 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
+import com.smarteist.autoimageslider.SliderView
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolylineClickListener,
@@ -63,7 +67,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         var dialog = Dialog(this)
         dialog.setContentView(R.layout.layout_room_full_view)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
+        var banneritem=Banner(listOf(
+            "https://media-cdn.tripadvisor.com/media/photo-s/13/d8/ea/1b/a-room-at-the-beach.jpg",
+            "https://media-cdn.tripadvisor.com/media/photo-s/15/ca/5c/f5/ruby-room.jpg",
+            "https://media-cdn.tripadvisor.com/media/photo-s/0d/e6/a1/55/ruby-room.jpg"))
+
+        var banner=dialog.findViewById<SliderView>(R.id.room_banner)
+        banner.setSliderAdapter(BannerAdapter(applicationContext,banneritem))
+        banner.setIndicatorAnimation(IndicatorAnimationType.WORM);
+        banner.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        banner.startAutoCycle()
         dialog.show()
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -72,7 +89,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         val sydney = LatLng(26.858631, 75.818909)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
+        googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN)
 
         val polyline1 = googleMap.addPolyline(
             PolylineOptions()
