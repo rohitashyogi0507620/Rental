@@ -2,6 +2,7 @@ package com.example.mapwork
 
 import `in`.probusinsurance.app.Home.ProductData.BannerAdapter
 import android.app.Dialog
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -86,10 +87,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         // Add a marker in Sydney and move the camera
+
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json))
+            if (!success) {
+                Log.e("TAG", "Style parsing failed.")
+            }
+        } catch (e: Exception) {
+            Log.e("TAG", "Can't find style. Error: ", e)
+        }
+
         val sydney = LatLng(26.858631, 75.818909)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN)
+       // googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN)
 
         val polyline1 = googleMap.addPolyline(
             PolylineOptions()

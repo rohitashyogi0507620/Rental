@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".MapsActivity">
 
-        <include layout="@layout/layout_map" />
+            <include layout="@layout/layout_map" />
 
     <RelativeLayout
-        app:behavior_peekHeight="200dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_sheet_behavior_id">
+        android:layout_above="@+id/bottom_sheet_behavior_id"
+        app:behavior_peekHeight="200dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/search_bar"
@@ -48,9 +48,10 @@
         </androidx.cardview.widget.CardView>
 
         <RelativeLayout
+            android:id="@+id/rl_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/ll_item">
+            android:layout_above="@+id/ll_chipview">
 
             <androidx.cardview.widget.CardView
                 style="@style/CardViewStyle"
@@ -83,6 +84,52 @@
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_chipview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ll_item">
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Single Room"
+                android:textColor="@color/white"
+                app:chipEndPadding="@dimen/margin_5dp"
+                app:chipIcon="@drawable/ic_singleroom"
+                app:chipIconTint="@color/white"
+                app:chipStartPadding="@dimen/margin_5dp"
+                app:chipSurfaceColor="@color/purple_500"
+                app:iconStartPadding="@dimen/margin_5dp" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Single Room"
+                android:textColor="@color/white"
+                app:chipEndPadding="@dimen/margin_5dp"
+                app:chipIcon="@drawable/ic_singleroom"
+                app:chipIconTint="@color/white"
+                app:chipStartPadding="@dimen/margin_5dp"
+                app:chipSurfaceColor="@color/purple_500"
+                app:iconStartPadding="@dimen/margin_5dp" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Single Room"
+                android:textColor="@color/white"
+                app:chipEndPadding="@dimen/margin_5dp"
+                app:chipIcon="@drawable/ic_singleroom"
+                app:chipIconTint="@color/white"
+                app:chipStartPadding="@dimen/margin_5dp"
+                app:chipSurfaceColor="@color/purple_500"
+                app:iconStartPadding="@dimen/margin_5dp" />
+        </LinearLayout>
 
         <include
             android:id="@+id/ll_item"
