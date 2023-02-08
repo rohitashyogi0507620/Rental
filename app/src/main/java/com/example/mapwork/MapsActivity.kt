@@ -2,14 +2,18 @@ package com.example.mapwork
 
 import `in`.probusinsurance.app.Home.ProductData.BannerAdapter
 import android.app.Dialog
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.example.mapwork.databinding.ActivityMapsBinding
 import com.google.android.gms.maps.*
@@ -37,11 +41,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                statusBarColor = Color.TRANSPARENT
+            }
+        }
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         MapsInitializer.initialize(applicationContext, MapsInitializer.Renderer.LATEST, this)
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
@@ -60,8 +72,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
             }
         })
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-
         bottomSheetDialog()
+
+        val cardview_Modify = findViewById<CardView>(R.id.card_view_modify)
+        cardview_Modify.setOnClickListener {
+            startActivity(Intent(applicationContext,SearchActivity::class.java) )
+        }
+
+
     }
 
     fun bottomSheetDialog() {
@@ -88,6 +106,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         mMap = googleMap
         // Add a marker in Sydney and move the camera
 
+        // Custom Theme
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
