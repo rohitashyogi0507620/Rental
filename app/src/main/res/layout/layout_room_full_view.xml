@@ -76,7 +76,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:background="@drawable/roundbackground"
-                            android:backgroundTint="@color/purple_200"
+                            android:backgroundTint="@color/colorPrimary"
                             android:padding="@dimen/margin_5dp"
                             android:src="@android:drawable/ic_lock_idle_alarm"
                             app:tint="@color/white" />
@@ -164,7 +164,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="6"
-            app:cardBackgroundColor="@color/purple_200">
+            app:cardBackgroundColor="@color/colorPrimary">
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"

@@ -79,7 +79,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@drawable/roundbackground"
-                        android:backgroundTint="@color/purple_200"
+                        android:backgroundTint="@color/colorPrimary"
                         android:padding="@dimen/margin_5dp"
                         android:src="@android:drawable/ic_lock_idle_alarm"
                         app:tint="@color/white" />
@@ -231,7 +231,7 @@
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <LinearLayout
-        android:background="@color/purple_200"
+        android:background="@color/colorPrimary"
         android:padding="@dimen/margin_10dp"
         android:id="@+id/layout_buynow"
         android:layout_alignParentBottom="true"
@@ -249,7 +249,7 @@
             android:text="2500/- Month"></TextView>
 
         <com.google.android.material.button.MaterialButton
-            app:strokeColor="@color/purple_500"
+            app:strokeColor="@color/colorPrimary"
             app:backgroundTint="@color/white"
             android:padding="@dimen/margin_10dp"
             style="@style/ShapeAppearanceOverlay.Material3.Button"
@@ -261,7 +261,7 @@
             android:text="Rent Now"
             android:textStyle="bold"
             android:textAllCaps="false"
-            android:textColor="@color/purple_500"></com.google.android.material.button.MaterialButton>
+            android:textColor="@color/colorPrimary"></com.google.android.material.button.MaterialButton>
     </LinearLayout>
 
 </RelativeLayout>

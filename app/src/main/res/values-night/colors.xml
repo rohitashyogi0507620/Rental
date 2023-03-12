@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#4F4F4F</color>
-    <color name="purple_500">#4F4F4F</color>
-    <color name="purple_700">#4F4F4F</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="themeColor">#4F4F4F</color>
+    <color name="colorPrimary">#858BF7</color>
+    <color name="colorPrimaryVariant">#D9DAF1</color>
+    <color name="colorSecondary">#4F4F4F</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="colorTheme">#121212</color>
+    <color name="color_sheet_indicator">#FFFFFF</color>
+    <color name="icon_color">@color/colorPrimary</color>
+
 </resources>

@@ -58,8 +58,7 @@
                         android:text="Pno 203 Rajput colony jhalana gram , 302020" />
 
                     <ImageView
-                        app:tint="@color/purple_200"
-                        android:backgroundTint="@color/purple_200"
+                        app:tint="@color/colorPrimary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_location" />
@@ -69,28 +68,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:orientation="horizontal">
                     <ImageView
-                        app:tint="@color/purple_200"
+                        app:tint="@color/colorPrimary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_cleaning_services" />
 
                     <ImageView
-                        app:tint="@color/purple_200"
-
+                        app:tint="@color/colorPrimary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_fan_" />
 
                     <ImageView
-                        app:tint="@color/purple_200"
-
+                        app:tint="@color/colorPrimary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_water" />
 
                     <ImageView
-                        app:tint="@color/purple_200"
-
+                        app:tint="@color/colorPrimary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_electricity" />

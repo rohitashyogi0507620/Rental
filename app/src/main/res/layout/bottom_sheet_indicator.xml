@@ -4,6 +4,5 @@
     android:layout_width="@dimen/bottomsheet_indicator_width"
     android:layout_height="@dimen/bottomsheet_indicator_height"
     android:layout_gravity="center_horizontal"
-    android:layout_margin="@dimen/margin_10dp"
-    app:cardBackgroundColor="@color/bottomsheet_indicator_color"
-    app:cardUseCompatPadding="true"></androidx.cardview.widget.CardView>
+    style="@style/CardViewStyle"
+    />
