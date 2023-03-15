@@ -23,6 +23,7 @@
         <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/card_stack_view"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:padding="4dp"/>

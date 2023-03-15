@@ -84,15 +84,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
                 Log.d("BottomSheet", v.toString())
             }
         })
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         //bottomSheetDialog()
 
-        val cardview_Modify = findViewById<CardView>(R.id.card_view_modify)
-        cardview_Modify.setOnClickListener {
-            startActivity(Intent(applicationContext,SearchActivity::class.java) )
-        }
 
-        initialize()
+       // initialize()
         startActivity(Intent(this,HomeActivity::class.java))
 
 

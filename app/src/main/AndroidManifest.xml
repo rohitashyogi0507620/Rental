@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,11 +17,19 @@
         android:theme="@style/Theme.MapWork"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.HomeActivity"
+            android:name=".ui.activity.RoomImagesActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchActivity"
-            android:exported="false">
+            android:name=".ui.activity.RoomViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.HomeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -34,6 +42,9 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".RoomDetailsActivity"
             android:exported="false"
             android:label="@string/title_activity_room_details" />
@@ -45,12 +56,7 @@
         <activity
             android:name=".MapsActivity"
             android:exported="true"
-            android:label="@string/title_activity_maps">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/title_activity_maps" />
     </application>
 
 </manifest>

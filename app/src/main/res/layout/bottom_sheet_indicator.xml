@@ -4,5 +4,5 @@
     android:layout_width="@dimen/bottomsheet_indicator_width"
     android:layout_height="@dimen/bottomsheet_indicator_height"
     android:layout_gravity="center_horizontal"
-    style="@style/CardViewStyle"
+    style="@style/StyleCardIndicator"
     />

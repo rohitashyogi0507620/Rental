@@ -20,84 +20,108 @@
 
             <ImageView
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:layout_height="match_parent"
                 app:srcCompat="@drawable/ic_room" />
 
             <LinearLayout
-                android:padding="@dimen/margin_10dp"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_5dp"
-                    android:text="Rajput Rooms" />
+                android:orientation="vertical"
+                android:padding="@dimen/margin_10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@id/room_favorite"
+                            android:padding="@dimen/margin_5dp"
+                            android:text="Rajput Rooms"></in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading>
+
+                        <in.probusinsurance.probusdesign.ui.button.ImageButton
+                            android:id="@+id/room_favorite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="@dimen/margin_5dp"
+                            android:src="@drawable/ic_favorite"/>
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextAppearance.Material3.BodySmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:padding="@dimen/margin_5dp"
+                            android:text="Pno 203 Rajput colony jhalana gram , 302020" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_location"
+                            app:tint="@color/colorPrimary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_cleaning_services"
+                            app:tint="@color/colorPrimary" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_fan_"
+                            app:tint="@color/colorPrimary" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_water"
+                            app:tint="@color/colorPrimary" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_electricity"
+                            app:tint="@color/colorPrimary" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rent Now 3200/-"
+                        android:textAllCaps="false" />
 
                     <TextView
-                        style="@style/TextAppearance.Material3.BodySmall"
-                        android:layout_width="0dp"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4"
                         android:padding="@dimen/margin_5dp"
-                        android:text="Pno 203 Rajput colony jhalana gram , 302020" />
+                        android:text=" 200" />
 
-                    <ImageView
-                        app:tint="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_location" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:orientation="horizontal">
-                    <ImageView
-                        app:tint="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_cleaning_services" />
-
-                    <ImageView
-                        app:tint="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_fan_" />
-
-                    <ImageView
-                        app:tint="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_water" />
-
-                    <ImageView
-                        app:tint="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_electricity" />
-                </LinearLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="match_parent"
-                    android:textAllCaps="false"
-                    android:text="Rent Now 3200/-"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
 
             </LinearLayout>
 
