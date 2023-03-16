@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.RoomImagesActivity">
 
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/ic_room" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,17 +9,14 @@
     </style>
 
     <style name="StyleCardIndicator">
+        <item name="background">@color/colorPrimary</item>
         <item name="cardBackgroundColor">@color/colorPrimary</item>
         <item name="cardCornerRadius">@dimen/card_radious</item>
-        <item name="cardElevation">@dimen/card_elevation</item>
-        <item name="cardUseCompatPadding">true</item>
     </style>
 
     <style name="Chip_Style" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipCornerRadius">@dimen/margin_20dp</item>
-        <item name="chipBackgroundColor">@color/colorTheme</item>
         <item name="chipStrokeWidth">@dimen/border_1dp</item>
         <item name="chipStrokeColor">@color/colorPrimary</item>\
-        <item name="chipSurfaceColor">@color/colorTheme</item>
     </style>
 </resources>

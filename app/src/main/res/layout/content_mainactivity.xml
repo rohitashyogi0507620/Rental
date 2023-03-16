@@ -9,7 +9,6 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-
         android:layout_height="match_parent">
 
 
@@ -104,7 +103,6 @@
                         android:id="@+id/home_chip_singleRoom"
                         style="@style/Chip_Style"
                         android:layout_width="wrap_content"
-                        app:checkedIcon="@drawable/ic_singleroom"
                         android:layout_height="wrap_content"
                         android:text="Single" />
 
@@ -112,7 +110,6 @@
                         android:id="@+id/home_chip_DoubleRoom"
                         style="@style/Chip_Style"
                         android:layout_width="wrap_content"
-                        app:checkedIcon="@drawable/ic_launcher_foreground"
                         android:layout_height="wrap_content"
                         android:text="Double" />
 
@@ -156,7 +153,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/bottom_sheet_indicator" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    style="@style/StyleCardIndicator"
+                    app:cardCornerRadius="@dimen/card_radious"
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/bottomsheet_indicator_width"
+                    android:layout_height="@dimen/bottomsheet_indicator_height"/>
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardsearch"
@@ -169,7 +173,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -194,13 +197,6 @@
                                 android:src="@drawable/ic_search"
                                 app:tint="@color/colorPrimary" />
                         </LinearLayout>
-
-                        <TextView
-                            style="@style/TextAppearance.Material3.HeadlineMedium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/margin_10dp"
-                            android:text="Recent Search"></TextView>
 
                     </LinearLayout>
 
