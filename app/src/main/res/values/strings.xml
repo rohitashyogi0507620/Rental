@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MapWork</string>
+    <string name="app_name">Renatal</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="YOUR_API_KEY" templateMergeStrategy="preserve" translatable="false">AIzaSyD_IP9KYEgH7I1BAX0Fu21OlHBQE4swvIk</string>
 

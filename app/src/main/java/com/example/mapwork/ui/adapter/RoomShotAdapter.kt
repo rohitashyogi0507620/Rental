@@ -57,5 +57,9 @@ class RoomShotAdapter(
         return list.size;
     }
 
+    fun notifDataChanged(){
+        notifyDataSetChanged()
+    }
+
 
 }

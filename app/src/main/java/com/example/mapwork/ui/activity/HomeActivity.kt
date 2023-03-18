@@ -6,30 +6,42 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mapwork.R
-import com.example.mapwork.adapter.RoomInfoWindowAdapter
+import com.example.mapwork.adapter.InfoWindowAdapter
 import com.example.mapwork.base.BaseActivity
 import com.example.mapwork.databinding.ActivityHomeBinding
+import com.example.mapwork.models.response.MakerInfoData
 import com.example.mapwork.models.response.RoomData
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import java.io.IOException
+import java.util.*
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(), OnMapReadyCallback,
     GoogleMap.OnPolylineClickListener, GoogleMap.OnPolygonClickListener,
-    OnMapsSdkInitializedCallback, RoomShotAdapter.OnItemClickListener {
+    OnMapsSdkInitializedCallback, GoogleMap.OnInfoWindowClickListener,
+    RoomShotAdapter.OnItemClickListener {
 
     private lateinit var mMap: GoogleMap
     private val PERMISSION_ID = 400
@@ -42,7 +54,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     lateinit var adapterShortRoom: RoomShotAdapter
-     var list_room= mutableListOf<RoomData>()
+    var list_room = mutableListOf<RoomData>()
+
 
     override fun getLayoutId(): Int {
         return R.layout.activity_home
@@ -63,7 +76,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        binding.contentLayout.homeRoomRecyclearView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+        binding.contentLayout.homeRoomRecyclearView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         adapterShortRoom = RoomShotAdapter(applicationContext, list_room, this)
         binding.contentLayout.homeRoomRecyclearView.adapter = adapterShortRoom
 
@@ -71,10 +85,76 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
     override fun initLiveDataObservers() {
 
-        list_room.add(RoomData("5500/- Month","100","Rajput Room","rajput colony malviya nagar jaipur 302017","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiNbfKmgTK5BhY13X5cy9Yf_E9IP9lqulxlCAdLRxFBGeaUFMtijXgecBh9OXDWrVXVxY&usqp=CAU"))
-        list_room.add(RoomData("3500/- Month","100","Vijay Raj Room","C5 malviya nagar Jaipur 302017","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX-MOoLj1SlW_qBJIxwsZUiHrqXIjbT-uh_A&usqp=CAU"))
-        list_room.add(RoomData("9500/- month","100","Shree Ganesh Room","203 C2 plaza malviya nagar jaipur 302017","https://blog.woodenstreet.com/images/data/image_upload/1652505306living-room-color-combination-idea-banner.jpeg"))
-        binding.contentLayout.homeRoomRecyclearView.adapter?.notifyDataSetChanged()
+        list_room.add(
+            RoomData(
+                "₹ 5500/-",
+                "100",
+                "Rajput Room",
+                "rajput colony malviya nagar jaipur 302017",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiNbfKmgTK5BhY13X5cy9Yf_E9IP9lqulxlCAdLRxFBGeaUFMtijXgecBh9OXDWrVXVxY&usqp=CAU",
+                26.860794, 75.810796
+            )
+        )
+        list_room.add(
+            RoomData(
+                "₹ 3500/-",
+                "100",
+                "Vijay Raj Room",
+                "C5 malviya nagar Jaipur 302017",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX-MOoLj1SlW_qBJIxwsZUiHrqXIjbT-uh_A&usqp=CAU",
+                26.857949, 75.814630
+            )
+        )
+        list_room.add(
+            RoomData(
+                "₹ 9500/-",
+                "100",
+                "Shree Ganesh Room",
+                "203 C2 plaza malviya nagar jaipur 302017",
+                "https://blog.woodenstreet.com/images/data/image_upload/1652505306living-room-color-combination-idea-banner.jpeg",
+                26.858319, 75.813104
+            )
+        )
+        list_room.add(
+            RoomData(
+                "₹ 9500/-",
+                "2116",
+                "Mahima Apartment",
+                "2nd flor 203no malviya nagar jaipur 302017",
+                "https://blog.woodenstreet.com/images/data/image_upload/1652505306living-room-color-combination-idea-banner.jpeg",
+                26.8574957, 75.8130546
+            )
+        )
+        adapterShortRoom.notifDataChanged()
+
+
+        binding.contentLayout.idSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+           override fun onQueryTextSubmit(query: String?): Boolean {
+
+                val location: String = query!!
+                var addressList: List<Address>? = null
+                if (location != null || location == "") {
+                    val geocoder = Geocoder(applicationContext)
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+
+                    val address = addressList!![0]
+                    val latLng = LatLng(address.latitude, address.longitude)
+                    mMap.addMarker(MarkerOptions().position(latLng).title(location))
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+
     }
 
     override fun onClickListener() {
@@ -112,11 +192,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             // in a raw resource file.
             val success =
                 mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json))
-            googleMap.setInfoWindowAdapter(RoomInfoWindowAdapter(this))
+
+            googleMap.setInfoWindowAdapter(InfoWindowAdapter(applicationContext))
+            googleMap.setOnInfoWindowClickListener(this)
 
             if (!success) {
                 Log.e("TAG", "Style parsing failed.")
             }
+
+            mMap.setOnCameraIdleListener(object : GoogleMap.OnCameraIdleListener {
+                override fun onCameraIdle() {
+                    val midLatLng: LatLng = mMap.getCameraPosition().target
+                    Log.e("Location", midLatLng.toString())
+
+                }
+            })
         } catch (e: Exception) {
             Log.e("TAG", "Can't find style. Error: ", e)
         }
@@ -225,27 +315,36 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
                     mFusedLocationClient.getLastLocation()
                         .addOnCompleteListener(OnCompleteListener { task ->
 
-                            if (task != null) {
+                            if (task != null && task.result != null) {
                                 val location: Location = task.result
                                 if (location == null) {
                                     requestNewLocationData()
                                 } else {
-                                    val yourlocation =
-                                        LatLng(location.getLatitude(), location.getLongitude())
-                                    mMap.addMarker(
-                                        MarkerOptions().position(yourlocation)
-                                            .title("Your Location")
-                                    )
-                                    // mMap.moveCamera(CameraUpdateFactory.newLatLng(yourlocation))
-                                    mMap.moveCamera(
-                                        CameraUpdateFactory.newLatLngZoom(yourlocation, 15f)
-                                    )
 
-                                    Log.d(
-                                        "Location",
-                                        "Latitude ${location.getLatitude()} and Longitude ${location.getLongitude()}"
+
+                                    list_room.add(
+                                        RoomData(
+                                            " ₹ 2900/-",
+                                            "100",
+                                            "Your Room",
+                                            "362 Plaza malviya nagar jaipur 302017",
+                                            "https://blog.woodenstreet.com/images/data/image_upload/1652505306living-room-color-combination-idea-banner.jpeg",
+                                            task.result.latitude,
+                                            task.result.longitude
+                                        )
                                     )
+                                    adapterShortRoom.notifDataChanged()
+
+                                    list_room.forEach { addMakerToLocation(it) }
+
+
                                 }
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Location Result not Recived turn on",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
                         })
                 } else {
@@ -277,7 +376,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         // on FusedLocationClient
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mFusedLocationClient.requestLocationUpdates(
-            mLocationRequest, mLocationCallback, Looper.myLooper()
+            mLocationRequest,
+            mLocationCallback,
+            Looper.myLooper()
         )
     }
 
@@ -341,9 +442,92 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     }
 
     override fun onItemClick(item: RoomData) {
-        Toast.makeText(applicationContext,item.toString(),Toast.LENGTH_LONG).show()
-        startActivity(Intent(applicationContext,RoomViewActivity::class.java))
+        startActivity(Intent(applicationContext, RoomViewActivity::class.java))
+
     }
+
+    override fun onInfoWindowClick(p0: Marker) {
+        Toast.makeText(
+            this, "Info window clicked",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+
+    fun addMakerToLocation(roomData: RoomData) {
+
+        val yourlocation = LatLng(roomData.latitude, roomData.longitude)
+        var markerData = MakerInfoData(
+            roomData.title,
+            roomData.location,
+            roomData.price
+        )
+        val gson = Gson()
+        val markerInfoString = gson.toJson(markerData)
+
+        mMap.addMarker(
+            MarkerOptions().position(yourlocation).snippet(markerInfoString)
+                .icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_singleroom))
+        )
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(yourlocation, 15f))
+        getDetailsFromLatLong(roomData.latitude, roomData.longitude)
+    }
+
+    private fun BitmapFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
+
+        vectorDrawable!!.setBounds(
+            0,
+            0,
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight
+        )
+        val bitmap = Bitmap.createBitmap(
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    fun getDetailsFromLatLong(latitude: Double, longitude: Double) {
+        val geocoder = Geocoder(applicationContext, Locale.getDefault())
+
+        val addresses: List<Address> = geocoder.getFromLocation(latitude, longitude, 1)
+        val address: String = addresses[0].getAddressLine(0)
+        val city: String = addresses[0].locality
+        val state: String = addresses[0].adminArea
+        val zip: String = addresses[0].postalCode
+        val featureName: String = addresses[0].featureName
+        val country: String = addresses[0].countryName
+
+        Log.d(
+            "LocationInfo",
+            " latitude ${latitude} longitude ${longitude} address ${address}  :: city ${city} state ${state} zip ${zip} country ${country} featureName ${featureName}"
+        )
+
+    }
+
+
+    fun addCircle(latitude: Double, longitude: Double) {
+        val circle = mMap.addCircle(
+            CircleOptions()
+                .center(LatLng(latitude, longitude))
+                .radius(100.0)
+                .strokeWidth(5f)
+                .strokeColor(Color.GREEN)
+                .fillColor(Color.argb(20, 100, 0, 0))
+                .clickable(true)
+        )
+        mMap.setOnCircleClickListener {
+            val strokeColor = it.strokeColor xor 0x00ffffff
+            it.strokeColor = strokeColor
+        }
+    }
+
 
 }
 

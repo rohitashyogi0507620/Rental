@@ -10,12 +10,16 @@ import com.example.mapwork.Room
 import com.example.mapwork.base.BaseActivity
 import com.example.mapwork.databinding.ActivityHomeBinding
 import com.example.mapwork.databinding.ActivityRoomViewBinding
+import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback
+import com.google.android.gms.maps.StreetViewPanorama
+import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
+import com.google.android.gms.maps.model.LatLng
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import `in`.probusinsurance.app.Home.ProductData.BannerAdapter
 
-class RoomViewActivity : BaseActivity<ActivityRoomViewBinding, RoomViewActivityViewModel>() {
+class RoomViewActivity : BaseActivity<ActivityRoomViewBinding, RoomViewActivityViewModel>(){
     override fun getLayoutId(): Int {
         return  R.layout.activity_room_view
     }
@@ -38,6 +42,7 @@ class RoomViewActivity : BaseActivity<ActivityRoomViewBinding, RoomViewActivityV
         binding.roomViewbanner.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         binding.roomViewbanner.startAutoCycle()
 
+
     }
 
     override fun initLiveDataObservers() {
@@ -51,4 +56,5 @@ class RoomViewActivity : BaseActivity<ActivityRoomViewBinding, RoomViewActivityV
         }
 
     }
+
 }

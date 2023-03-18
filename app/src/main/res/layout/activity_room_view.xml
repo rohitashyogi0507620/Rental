@@ -205,7 +205,5 @@
             android:layout_alignParentBottom="true"
             android:text="Rent 5000/- month "
             app:isactiveflatbutton="true" />
-
-
     </RelativeLayout>
 </layout>
