@@ -67,14 +67,26 @@ class RoomViewActivity : BaseActivity<ActivityRoomViewBinding, RoomViewActivityV
                                 binding.roomViewbanner.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
                                 binding.roomViewbanner.startAutoCycle()
                             }
-                            binding.roomViewTxttitle.text = it.data.property_type
+                            binding.roomViewTxttitle.text = it.data.property_type.capitalize()
                             binding.roomViewTxtlocation.text =
                                 "${it.data.plot_number} , ${it.data.street} ${it.data.landmark} ,${it.data.city} ,${it.data.state} ,${it.data.pincode}"
                             binding.roomViewRentbtn.text =
                                 getString(R.string.rupesssign) + " ${it.data.price}" + getString(R.string.rupesending) + " " + getString(
                                     R.string.month
                                 )
-                            binding.roomViewTxtdate.text =getString(R.string.addedon)+ getFormatedDate(it.data.date_time)
+                            binding.roomViewTxtdate.text =
+                                getString(R.string.addedon) + getFormatedDate(it.data.date_time)
+                            if (!it.data.facilities.isNullOrEmpty() && it.data.facilities.size > 0) {
+
+                                binding.roomBedCount.text = it.data.facilities.get(0).no_room
+                                binding.roomBlubCount.text = it.data.facilities.get(0).blub
+                                binding.roomFanCount.text = it.data.facilities.get(0).fan
+
+                                binding.roomBathroomCount.text = it.data.facilities.get(0).bath
+                                binding.roomKitchenCount.text = it.data.facilities.get(0).kitchen
+                                binding.roomToiletCount.text = it.data.facilities.get(0).toilate
+
+                            }
 
                         }
                     }

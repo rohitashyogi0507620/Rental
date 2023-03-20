@@ -42,8 +42,11 @@ class RoomShotAdapter(
         holder.itemView.setOnClickListener {
             itemClickListener.onItemClick(item, position, 0)
         }
+        holder.roomDirection.setOnClickListener {
+            itemClickListener.onItemClick(item, position, 1)
+        }
 
-        holder.roomTitle.text = item.property_type
+        holder.roomTitle.text = item.property_type.capitalize()
         holder.roomlLcation.text = "${item.plot_number} , ${item.street} ${item.landmark} ${item.city} ${item.pincode}"
         holder.roomPrice.text = context.getString(R.string.rupesssign) + " ${item.price}" + context.getString(R.string.rupesending)
 
@@ -64,6 +67,7 @@ class RoomShotAdapter(
         val roomlLcation = itemView.findViewById(R.id.room_txtlocation) as TextView
         val roomPrice = itemView.findViewById(R.id.room_txtprice) as TextView
         val roomImage = itemView.findViewById(R.id.room_image) as ImageView
+        val roomDirection = itemView.findViewById(R.id.room_directionicon) as ImageView
 
     }
 

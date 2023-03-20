@@ -33,7 +33,7 @@ class InfoWindowAdapter(mContext: Context) : GoogleMap.InfoWindowAdapter {
             val tvName = mWindow.findViewById<TextView>(R.id.room_makername)
             val tvLocation = mWindow.findViewById<TextView>(R.id.room_makerlocation)
             val tvPrice = mWindow.findViewById<TextView>(R.id.room_makerprice)
-            tvName.text = aMarkerInfo.title
+            tvName.text = aMarkerInfo.title.capitalize()
             tvLocation.text = aMarkerInfo.subtitle
             tvPrice.text = aMarkerInfo.price
             return mWindow

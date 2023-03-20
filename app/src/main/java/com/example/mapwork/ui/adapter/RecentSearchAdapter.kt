@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mapwork.R
 import com.example.mapwork.api.APIConstant.BASE_URL
-import com.example.mapwork.databinding.LayoutRoominfoShortBinding
 import com.example.mapwork.models.response.Image
 import com.example.mapwork.models.response.PropertyDataResponse
 import com.example.mapwork.models.response.RecentSearch
@@ -44,7 +43,7 @@ class RecentSearchAdapter(
             itemClickListener.onItemClick(item, position, 0)
         }
 
-        holder.searchtitle.text = item.searchTitle
+        holder.searchtitle.text = item.searchTitle.capitalize()
         holder.searchLocation.text = item.searchLocation
         holder.searchDistance.text = item.searchDistance
 

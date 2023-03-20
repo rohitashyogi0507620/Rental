@@ -20,13 +20,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.mapwork.R
 import com.example.mapwork.SearchActivity
 import com.example.mapwork.adapter.InfoWindowAdapter
@@ -37,7 +35,6 @@ import com.example.mapwork.models.response.MakerInfoData
 import com.example.mapwork.models.response.NetworkResult
 import com.example.mapwork.models.response.PropertyDataResponse
 import com.example.mapwork.models.response.RecentSearch
-import com.example.mapwork.utils.SessionConstants
 import com.example.mapwork.utils.SessionConstants.PROPERTY_ID
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
@@ -71,6 +68,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     lateinit var adapterRecentSearch: RecentSearchAdapter
     var list_room = mutableListOf<PropertyDataResponse>()
     var recentsearch_list = mutableListOf<RecentSearch>()
+
+    var yourlocation: LatLng? = null
 
 
     override fun getLayoutId(): Int {
@@ -462,12 +461,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     }
 
     override fun onItemClick(item: PropertyDataResponse, position: Int, type: Int) {
-        startActivity(
-            Intent(applicationContext, RoomViewActivity::class.java).putExtra(
-                PROPERTY_ID,
-                item.id.toString()
+        if (type == 0) {
+            startActivity(
+                Intent(applicationContext, RoomViewActivity::class.java).putExtra(
+                    PROPERTY_ID,
+                    item.id.toString()
+                )
             )
-        )
+        } else {
+
+//            val line = mMap.addPolyline(
+//                PolylineOptions()
+//                    .add(yourlocation, LatLng(item.latitude, item.longtitude))
+//                    .width(5f)
+//                    .color(Color.RED)
+//            )
+        }
+
     }
 
     override fun onInfoWindowClick(p0: Marker) {
@@ -475,7 +485,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             this, "Info window clicked", Toast.LENGTH_SHORT
         ).show()
     }
-
 
 
     fun getAddressFromLatLong(latitude: Double, longitude: Double): String? {
@@ -511,9 +520,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         try {
 
-            val yourlocation = LatLng(latitude, longitude)
+            yourlocation = LatLng(latitude, longitude)
             mMap.addMarker(
-                MarkerOptions().position(yourlocation)
+                MarkerOptions().position(yourlocation!!)
                     .icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_userlocation))
             )
             moveCameraToLocation(latitude, longitude)
@@ -525,7 +534,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             var address = getAddressFromLatLong(latitude, longitude)
             if (!address.isNullOrEmpty()) {
                 Log.e("PointerAddress", "Your Pincode ${zipCode} Your Pointer ${address}")
-                binding.contentLayout.homeTxtsearchview.setText(address)
+                binding.contentLayout.homeTxtsearchview.setText(address.toLowerCase())
             }
         } catch (e: Exception) {
             e.printStackTrace()

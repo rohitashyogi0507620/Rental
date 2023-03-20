@@ -57,6 +57,7 @@
             </LinearLayout>
 
             <ImageView
+                android:visibility="gone"
                 android:rotation="90"
                 android:src="@drawable/ic_arrow_pointer"
                 android:layout_width="match_parent"

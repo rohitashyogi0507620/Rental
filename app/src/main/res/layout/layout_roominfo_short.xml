@@ -47,39 +47,40 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toLeftOf="@id/room_favoriteicon"
+                                android:layout_toLeftOf="@id/room_icon_action"
                                 android:orientation="vertical">
 
                                 <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
                                     android:id="@+id/room_txttitle"
-                                    android:lines="1"
-                                    android:maxLines="1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"
+                                    android:inputType="textCapWords"
+                                    android:lines="1"
+                                    android:maxLines="1"
                                     android:text="Rajput Rooms" />
 
                                 <in.probusinsurance.probusdesign.ui.textview.TextViewSubHeadingSmall
                                     android:id="@+id/room_txtlocation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:maxLines="2"
-                                    android:lines="2"
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"
+                                    android:lines="2"
+                                    android:maxLines="2"
                                     android:text="Pno 203 Rajput colony jhalana gram , 302020" />
 
 
                                 <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
                                     android:id="@+id/room_txtprice"
-                                    android:lines="1"
-                                    android:maxLines="1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"
                                     android:layout_toLeftOf="@id/room_favoriteicon"
+                                    android:lines="1"
+                                    android:maxLines="1"
                                     android:text="₹ 2500/- "
                                     app:customColor="@color/colorPrimary"
                                     app:customColorEnable="true" />
@@ -87,13 +88,31 @@
                             </LinearLayout>
 
 
-                            <in.probusinsurance.probusdesign.ui.button.ImageButton
-                                android:id="@+id/room_favoriteicon"
+                            <LinearLayout
+                                android:id="@+id/room_icon_action"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:padding="@dimen/margin_5dp"
-                                app:srcCompat="@drawable/ic_favorite" />
+                                android:orientation="vertical">
+
+                                <in.probusinsurance.probusdesign.ui.button.ImageButton
+                                    android:id="@+id/room_favoriteicon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/margin_5dp"
+                                    app:srcCompat="@drawable/ic_favorite" />
+
+                                <in.probusinsurance.probusdesign.ui.button.ImageButton
+                                    android:id="@+id/room_directionicon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:padding="@dimen/margin_5dp"
+                                    app:srcCompat="@drawable/ic_direction" />
+
+                            </LinearLayout>
+
+
                         </RelativeLayout>
 
 
