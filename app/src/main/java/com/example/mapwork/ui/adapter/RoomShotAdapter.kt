@@ -44,12 +44,12 @@ class RoomShotAdapter(
         }
 
         holder.roomTitle.text = item.property_type
-        holder.roomlLcation.text = "${item.plot_number} , ${item.street} ${item.landmark}"
-        holder.roomPrice.text = context.getString(R.string.rupesssign)+" ${item.price}"+context.getString(R.string.rupesending)
+        holder.roomlLcation.text = "${item.plot_number} , ${item.street} ${item.landmark} ${item.city} ${item.pincode}"
+        holder.roomPrice.text = context.getString(R.string.rupesssign) + " ${item.price}" + context.getString(R.string.rupesending)
 
         if (!item.images.isNullOrEmpty() && item.images.size > 0) {
-            var imageUrl=BASE_URL+item.images.get(0).image
-            Log.d("IMAGEURL",imageUrl)
+            var imageUrl = BASE_URL + item.images.get(0).image
+            Log.d("IMAGEURL", imageUrl)
             Glide.with(context)
                 .load(imageUrl)
                 .into(holder.roomImage)

@@ -52,6 +52,8 @@
 
                                 <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
                                     android:id="@+id/room_txttitle"
+                                    android:lines="1"
+                                    android:maxLines="1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
@@ -62,6 +64,8 @@
                                     android:id="@+id/room_txtlocation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:maxLines="2"
+                                    android:lines="2"
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"
                                     android:text="Pno 203 Rajput colony jhalana gram , 302020" />
@@ -69,6 +73,8 @@
 
                                 <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
                                     android:id="@+id/room_txtprice"
+                                    android:lines="1"
+                                    android:maxLines="1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
