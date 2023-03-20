@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_bottomsheet"
+    style="@style/BottomSheetDialogtheme"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@drawable/bottom_sheet_background"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/bottom_sheet_indicator" />
+
+        <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/margin_10dp"
+            android:layout_height="wrap_content"
+            android:text="@string/LeaseType" />
+
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <in.probusinsurance.probusdesign.ui.radiobutton.RadioButtonGender
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/margin_5dp"
+                style="@style/RadioButton_Gender_Style"
+                android:text="@string/LeaseType_bachelor"
+                android:layout_height="wrap_content" />
+
+            <in.probusinsurance.probusdesign.ui.radiobutton.RadioButtonGender
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/margin_5dp"
+                style="@style/RadioButton_Gender_Style"
+                android:text="@string/LeaseType_student"
+                android:layout_height="wrap_content" />
+
+        </RadioGroup>
+
+        <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/margin_10dp"
+            android:layout_height="wrap_content"
+            android:text="@string/FacilitiestType" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <in.probusinsurance.probusdesign.ui.checkbox.SingleCheckBox
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/margin_10dp"
+                style="@style/RadioButton_Gender_Style"
+                android:text="@string/fan"
+                android:layout_height="wrap_content" />
+
+            <in.probusinsurance.probusdesign.ui.checkbox.SingleCheckBox
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/margin_10dp"
+                style="@style/RadioButton_Gender_Style"
+                android:text="@string/light"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

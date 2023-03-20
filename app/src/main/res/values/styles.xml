@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="CardViewStyle">
         <item name="cardBackgroundColor">@color/colorTheme</item>
@@ -9,14 +9,26 @@
     </style>
 
     <style name="StyleCardIndicator">
-        <item name="background">@color/colorPrimary</item>
-        <item name="cardBackgroundColor">@color/colorPrimary</item>
+        <item name="cardBackgroundColor">@color/color_sheet_indicator</item>
         <item name="cardCornerRadius">@dimen/card_radious</item>
     </style>
 
-    <style name="Chip_Style" parent="Widget.MaterialComponents.Chip.Choice">
+    <style name="Chip_Style" parent="Widget.MaterialComponents.Chip.Choice" >
         <item name="chipCornerRadius">@dimen/margin_20dp</item>
         <item name="chipStrokeWidth">@dimen/border_1dp</item>
-        <item name="chipStrokeColor">@color/colorPrimary</item>\
+        <item name="chipStrokeColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="android:textSize">@dimen/chip_text_size</item>
+    </style>
+
+    <style name="BottomSheetDialogtheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetstyle</item>
+
+    </style>
+
+    <style name="BottomSheetstyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>

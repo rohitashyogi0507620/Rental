@@ -8,4 +8,5 @@
     <color name="colorTheme">#FFFFFF</color>
     <color name="color_sheet_indicator">#B2B2B2</color>
     <color name="icon_color">@color/colorPrimary</color>
+    <color name="colorProgress">#dddddd</color>
 </resources>

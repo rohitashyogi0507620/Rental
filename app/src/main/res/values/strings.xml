@@ -7,5 +7,20 @@
     <string name="title_activity_room_details">RoomDetailsActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="search_hint">Search room near by</string>
+    <string name="search_hint">Search room </string>
+    <string name="rupesssign">₹</string>
+    <string name="rupesending">/-</string>
+    <string name="month">Month</string>
+    <string name="LeaseType">Lease Type</string>
+    <string name="LeaseType_family">Family</string>
+    <string name="LeaseType_bachelor">Bachelor</string>
+    <string name="LeaseType_student">Student</string>
+    <string name="FacilitiestType">Facilities Type</string>
+    <string name="fan">Fan</string>
+    <string name="light">Light</string>
+    <string name="addedon">"Added On : "</string>
+    <string name="recent">Recent</string>
+    <string name="clearall">Clear All</string>
+    <string name="about">About</string>
+    <string name="RoomDiscription">You can book a home in a well laid out and Semi-Furnished Semi-Furnished apartment in sirsi road, jaipur at a rent of Rs 20000.  This apartment is located in a good locality with a good view and is great for a family with 3 bedrooms and 3 bathrooms. It has 1 parking space too. The area of the apartment is 2000 square feet and has 1 balcony. This apartment is facing towards the street and has a good view from the apartment.</string>
 </resources>

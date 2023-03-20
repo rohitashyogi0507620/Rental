@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,144 +13,165 @@
         android:layout_height="match_parent">
 
 
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_pointer" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/bottom_sheet_behavior_id"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="@dimen/bottom_layout_height"
             android:gravity="bottom"
-            android:orientation="vertical"
-            app:behavior_peekHeight="200dp">
+            android:orientation="vertical">
 
 
             <LinearLayout
-                android:id="@+id/rl_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/ll_chipview"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_5dp">
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    style="@style/CardViewStyle"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/rl_location"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="right">
+                    android:layout_above="@+id/ll_chipview"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_5dp">
 
-                    <in.probusinsurance.probusdesign.ui.button.ImageButton
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/home_modify_icon"
+                        style="@style/CardViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_10dp"
-                        app:srcCompat="@drawable/ic_option" />
+                        android:layout_alignParentLeft="true"
+                        android:layout_gravity="right">
 
-                </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_10dp"
+                            app:srcCompat="@drawable/ic_option" />
 
-                <androidx.cardview.widget.CardView
-                    style="@style/CardViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right">
+                    </androidx.cardview.widget.CardView>
 
-                    <in.probusinsurance.probusdesign.ui.button.ImageButton
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/home_filter_icon"
+                        style="@style/CardViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_10dp"
-                        app:srcCompat="@drawable/ic_filter" />
+                        android:layout_gravity="right">
 
-                </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_10dp"
+                            app:srcCompat="@drawable/ic_filter" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/home_location_icon"
+                            style="@style/CardViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_10dp"
+                                android:src="@drawable/ic_location" />
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_chipview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ll_item"
+                    android:paddingLeft="@dimen/margin_10dp"
+                    android:paddingRight="@dimen/margin_10dp">
+
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/home_chipgroup_common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:checkedChip="@id/home_chip_singleRoom"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/home_chip_singleRoom"
+                            style="@style/Chip_Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Single Room" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/home_chip_Roomkitchen"
+                            style="@style/Chip_Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Room+Kitchen" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/home_chip_Bachelors"
+                            style="@style/Chip_Style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bachelors" />
+
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.cardview.widget.CardView
-                        style="@style/CardViewStyle"
-                        android:layout_width="wrap_content"
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/home_roomRecyclearView"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true">
-
-                        <in.probusinsurance.probusdesign.ui.button.ImageButton
-                            android:id="@+id/home_location_icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_10dp"
-                            android:src="@drawable/ic_my_location" />
-
-                    </androidx.cardview.widget.CardView>
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="10"
+                        tools:listitem="@layout/layout_roominfo_short" />
 
 
                 </RelativeLayout>
-
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_chipview"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/home_locationPicker"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/ll_item"
-                android:padding="@dimen/margin_10dp">
-
-                <com.google.android.material.chip.ChipGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:checkedChip="@id/home_chip_singleRoom"
-                    app:singleSelection="true">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/home_chip_singleRoom"
-                        style="@style/Chip_Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Single" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/home_chip_DoubleRoom"
-                        style="@style/Chip_Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Double" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/home_chip_ubleRoom"
-                        style="@style/Chip_Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Room + Kithen" />
-
-                </com.google.android.material.chip.ChipGroup>
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/home_roomRecyclearView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="10"
-                tools:listitem="@layout/layout_roominfo_short" />
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_pointer" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <androidx.constraintlayout.motion.widget.MotionLayout
             android:id="@+id/bottom_sheet_behavior_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bottom_sheet_background"
+            android:elevation="@dimen/margin_15dp"
             android:visibility="visible"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="100dp"
+            app:behavior_peekHeight="@dimen/bottom_layout_height"
             app:layoutDescription="@xml/activity_main_scene"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -159,24 +181,54 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
+                <include layout="@layout/bottom_sheet_indicator" />
 
                 <androidx.cardview.widget.CardView
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    style="@style/StyleCardIndicator"
-                    android:layout_gravity="center"
-                    android:layout_width="@dimen/bottomsheet_indicator_width"
-                    android:layout_height="@dimen/bottomsheet_indicator_height"/>
-
-                <androidx.appcompat.widget.SearchView
-                    app:voiceIcon="@drawable/ic_arrrow_bottom"
-                    android:id="@+id/idSearchView"
+                    style="@style/CardViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@color/colorTheme"
-                    app:iconifiedByDefault="false"
-                    app:queryHint="Search Room" />
+                    android:layout_alignParentRight="true">
+
+                    <RelativeLayout
+                        android:id="@+id/home_search_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_10dp">
+
+                        <in.probusinsurance.probusdesign.ui.textview.TextViewSmallHeading
+                            android:id="@+id/home_txtsearchview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/margin_5dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:layout_marginEnd="@dimen/margin_5dp"
+                            android:layout_marginBottom="@dimen/margin_5dp"
+                            android:hint="@string/search_hint"
+                            android:maxLines="1" />
+
+
+                        <in.probusinsurance.probusdesign.ui.button.ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="@dimen/margin_5dp"
+                            android:src="@drawable/ic_search" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/home_recentRecyclearView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/layout_recent_search" />
+
 
             </LinearLayout>
         </androidx.constraintlayout.motion.widget.MotionLayout>

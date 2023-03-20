@@ -1,5 +1,6 @@
 package com.example.mapwork.ui.activity
 
+import RecentSearchAdapter
 import RoomShotAdapter
 import android.Manifest
 import android.annotation.SuppressLint
@@ -16,37 +17,50 @@ import android.location.LocationManager
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.Window
+import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mapwork.R
+import com.example.mapwork.SearchActivity
 import com.example.mapwork.adapter.InfoWindowAdapter
 import com.example.mapwork.base.BaseActivity
 import com.example.mapwork.databinding.ActivityHomeBinding
+import com.example.mapwork.models.request.PropertyByPincodeRequest
 import com.example.mapwork.models.response.MakerInfoData
-import com.example.mapwork.models.response.RoomData
+import com.example.mapwork.models.response.NetworkResult
+import com.example.mapwork.models.response.PropertyDataResponse
+import com.example.mapwork.models.response.RecentSearch
+import com.example.mapwork.utils.SessionConstants
+import com.example.mapwork.utils.SessionConstants.PROPERTY_ID
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import java.io.IOException
+import `in`.probusinsurance.probusdesign.ui.dialog.AlertDialog
 import java.util.*
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(), OnMapReadyCallback,
     GoogleMap.OnPolylineClickListener, GoogleMap.OnPolygonClickListener,
     OnMapsSdkInitializedCallback, GoogleMap.OnInfoWindowClickListener,
-    RoomShotAdapter.OnItemClickListener {
+    RoomShotAdapter.OnItemClickListener, RecentSearchAdapter.OnItemClickListener {
 
     private lateinit var mMap: GoogleMap
     private val PERMISSION_ID = 400
 
     private val PATTERN_GAP_LENGTH_PX = 20
+    private val ZOOM_LEVEL = 15f
     private val DOT: PatternItem = Dot()
     private val GAP: PatternItem = Gap(PATTERN_GAP_LENGTH_PX.toFloat())
 
@@ -54,7 +68,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     lateinit var adapterShortRoom: RoomShotAdapter
-    var list_room = mutableListOf<RoomData>()
+    lateinit var adapterRecentSearch: RecentSearchAdapter
+    var list_room = mutableListOf<PropertyDataResponse>()
+    var recentsearch_list = mutableListOf<RecentSearch>()
 
 
     override fun getLayoutId(): Int {
@@ -81,78 +97,67 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         adapterShortRoom = RoomShotAdapter(applicationContext, list_room, this)
         binding.contentLayout.homeRoomRecyclearView.adapter = adapterShortRoom
 
+        binding.contentLayout.homeRecentRecyclearView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapterRecentSearch = RecentSearchAdapter(applicationContext, recentsearch_list, this)
+        binding.contentLayout.homeRecentRecyclearView.adapter = adapterRecentSearch
+
     }
 
     override fun initLiveDataObservers() {
 
-        list_room.add(
-            RoomData(
-                "₹ 5500/-",
-                "100",
-                "Rajput Room",
-                "rajput colony malviya nagar jaipur 302017",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiNbfKmgTK5BhY13X5cy9Yf_E9IP9lqulxlCAdLRxFBGeaUFMtijXgecBh9OXDWrVXVxY&usqp=CAU",
-                26.860794, 75.810796
-            )
-        )
-        list_room.add(
-            RoomData(
-                "₹ 3500/-",
-                "100",
-                "Vijay Raj Room",
-                "C5 malviya nagar Jaipur 302017",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX-MOoLj1SlW_qBJIxwsZUiHrqXIjbT-uh_A&usqp=CAU",
-                26.857949, 75.814630
-            )
-        )
-        list_room.add(
-            RoomData(
-                "₹ 9500/-",
-                "100",
-                "Shree Ganesh Room",
-                "203 C2 plaza malviya nagar jaipur 302017",
-                "https://blog.woodenstreet.com/images/data/image_upload/1652505306living-room-color-combination-idea-banner.jpeg",
-                26.858319, 75.813104
-            )
-        )
-        list_room.add(
-            RoomData(
-                "₹ 9500/-",
-                "2116",
-                "Mahima Apartment",
-                "2nd flor 203no malviya nagar jaipur 302017",
-                "https://blog.woodenstreet.com/images/data/image_upload/1652505306living-room-color-combination-idea-banner.jpeg",
-                26.8574957, 75.8130546
-            )
-        )
-        adapterShortRoom.notifDataChanged()
 
+        viewModel.propertyDataResponse.observe(this) {
+            it.getContentIfNotHandled()?.let {
+                //binding.progressLayout.setShowProgress(false)
 
-        binding.contentLayout.idSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-           override fun onQueryTextSubmit(query: String?): Boolean {
+                when (it) {
+                    is NetworkResult.Success -> {
+                        list_room.removeAll(list_room)
+                        list_room.addAll(it.data!!)
+                        list_room.forEach {
+                            addPropertyMarkerToMap(it)
+                        }
+                        adapterShortRoom.notifDataChanged()
 
-                val location: String = query!!
-                var addressList: List<Address>? = null
-                if (location != null || location == "") {
-                    val geocoder = Geocoder(applicationContext)
-                    try {
-                        addressList = geocoder.getFromLocationName(location, 1)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
                     }
+                    is NetworkResult.Error -> {
+                        AlertDialog.ErrorDialog(this, it.errrormessage.toString())
+                    }
+                    is NetworkResult.Loading -> {
+                        // binding.progressLayout.setShowProgress(true)
 
-                    val address = addressList!![0]
-                    val latLng = LatLng(address.latitude, address.longitude)
-                    mMap.addMarker(MarkerOptions().position(latLng).title(location))
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+                    }
+                    else -> {
+
+                    }
                 }
-                return false
             }
+        }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+        viewModel.recentSearchResponse.observe(this) {
+            it.getContentIfNotHandled()?.let {
+                //binding.progressLayout.setShowProgress(false)
+
+                when (it) {
+                    is NetworkResult.Success -> {
+                        recentsearch_list.addAll(it.data!!)
+                        adapterRecentSearch.notifDataChanged()
+
+                    }
+                    is NetworkResult.Error -> {
+                        AlertDialog.ErrorDialog(this, it.errrormessage.toString())
+                    }
+                    is NetworkResult.Loading -> {
+                        // binding.progressLayout.setShowProgress(true)
+
+                    }
+                    else -> {
+
+                    }
+                }
             }
-        })
+        }
 
 
     }
@@ -171,14 +176,40 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             showBottomSheetModify()
         }
 
+        binding.contentLayout.homeChipgroupCommon.setOnCheckedStateChangeListener { group, checkedIds ->
+            if (checkedIds.equals(R.id.home_chip_singleRoom)) {
+
+            } else if (checkedIds.equals(R.id.home_chip_Roomkitchen)) {
+
+            } else if (checkedIds.equals(R.id.home_chip_Bachelors)) {
+
+            }
+        }
+
+        binding.contentLayout.homeSearchLayout.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
+
     }
+
 
     private fun showBottomSheetModify() {
         Snackbar.make(binding.root, "Modify", Snackbar.LENGTH_LONG).show()
     }
 
     private fun showBottomSheetFilter() {
-        Snackbar.make(binding.root, "Filter", Snackbar.LENGTH_LONG).show()
+        var bottomSheetDialog: BottomSheetDialog? =
+            BottomSheetDialog(this, R.style.BottomSheetDialogtheme)
+        val view: View = LayoutInflater.from(this).inflate(R.layout.layout_bottomsheet_filter, null)
+        bottomSheetDialog!!.setContentView(view)
+
+        bottomSheetDialog!!.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        val window: Window = bottomSheetDialog!!.window!!
+        val decorView: View = window.getDecorView()
+        decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR)
+
+        bottomSheetDialog!!.show()
+
 
     }
 
@@ -196,17 +227,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             googleMap.setInfoWindowAdapter(InfoWindowAdapter(applicationContext))
             googleMap.setOnInfoWindowClickListener(this)
 
-            if (!success) {
-                Log.e("TAG", "Style parsing failed.")
-            }
 
             mMap.setOnCameraIdleListener(object : GoogleMap.OnCameraIdleListener {
                 override fun onCameraIdle() {
-                    val midLatLng: LatLng = mMap.getCameraPosition().target
-                    Log.e("Location", midLatLng.toString())
+
+//                    val midLatLng: LatLng = mMap.getCameraPosition().target
+//                    if (midLatLng != null && !midLatLng.latitude.equals(0.0) && !midLatLng.longitude.equals(0.0)) {
+//                        var address = getAddressFromLatLong(midLatLng.latitude, midLatLng.longitude)
+//                        if (!address.isNullOrEmpty()) {
+//                            Log.e("PointerAddress", "Your Pointer ${address}")
+//                            binding.contentLayout.homeTxtsearchview.setText(address)
+//                        }
+//                    }
 
                 }
+
             })
+
         } catch (e: Exception) {
             Log.e("TAG", "Can't find style. Error: ", e)
         }
@@ -320,24 +357,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
                                 if (location == null) {
                                     requestNewLocationData()
                                 } else {
-
-
-                                    list_room.add(
-                                        RoomData(
-                                            " ₹ 2900/-",
-                                            "100",
-                                            "Your Room",
-                                            "362 Plaza malviya nagar jaipur 302017",
-                                            "https://blog.woodenstreet.com/images/data/image_upload/1652505306living-room-color-combination-idea-banner.jpeg",
-                                            task.result.latitude,
-                                            task.result.longitude
-                                        )
+                                    addMakerToOwnLocation(
+                                        task.result.latitude,
+                                        task.result.longitude
                                     )
-                                    adapterShortRoom.notifDataChanged()
-
-                                    list_room.forEach { addMakerToLocation(it) }
-
-
                                 }
                             } else {
                                 Toast.makeText(
@@ -376,19 +399,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         // on FusedLocationClient
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mFusedLocationClient.requestLocationUpdates(
-            mLocationRequest,
-            mLocationCallback,
-            Looper.myLooper()
+            mLocationRequest, mLocationCallback, Looper.myLooper()
         )
     }
 
     private val mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             val mLastLocation: Location = locationResult.getLastLocation()!!
-
             Log.d(
                 "Location",
-                "Latitude ${mLastLocation.getLatitude()} and Longitude ${mLastLocation.getLongitude()}"
+                "On Location Change Latitude ${mLastLocation.getLatitude()} and Longitude ${mLastLocation.getLongitude()}"
             )
 
         }
@@ -441,26 +461,87 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         }
     }
 
-    override fun onItemClick(item: RoomData) {
-        startActivity(Intent(applicationContext, RoomViewActivity::class.java))
-
+    override fun onItemClick(item: PropertyDataResponse, position: Int, type: Int) {
+        startActivity(
+            Intent(applicationContext, RoomViewActivity::class.java).putExtra(
+                PROPERTY_ID,
+                item.id.toString()
+            )
+        )
     }
 
     override fun onInfoWindowClick(p0: Marker) {
         Toast.makeText(
-            this, "Info window clicked",
-            Toast.LENGTH_SHORT
+            this, "Info window clicked", Toast.LENGTH_SHORT
         ).show()
     }
 
 
-    fun addMakerToLocation(roomData: RoomData) {
 
-        val yourlocation = LatLng(roomData.latitude, roomData.longitude)
+    fun getAddressFromLatLong(latitude: Double, longitude: Double): String? {
+        try {
+            val geocoder = Geocoder(applicationContext, Locale.getDefault())
+            val addresses: List<Address> = geocoder.getFromLocation(latitude, longitude, 1)
+            if (!addresses.isNullOrEmpty() && addresses.size > 0) {
+                val address: String = addresses[0].getAddressLine(0)
+                return address
+            } else {
+                return null
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            return null
+        }
+    }
+
+
+    fun addCircle(latitude: Double, longitude: Double) {
+        val circle = mMap.addCircle(
+            CircleOptions().center(LatLng(latitude, longitude)).radius(100.0).strokeWidth(5f)
+                .strokeColor(Color.GREEN).fillColor(Color.argb(20, 100, 0, 0)).clickable(true)
+        )
+        mMap.setOnCircleClickListener {
+            val strokeColor = it.strokeColor xor 0x00ffffff
+            it.strokeColor = strokeColor
+        }
+    }
+
+
+    fun addMakerToOwnLocation(latitude: Double, longitude: Double) {
+
+        try {
+
+            val yourlocation = LatLng(latitude, longitude)
+            mMap.addMarker(
+                MarkerOptions().position(yourlocation)
+                    .icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_userlocation))
+            )
+            moveCameraToLocation(latitude, longitude)
+
+            var zipCode = getPincodeLatLong(latitude, longitude)!!
+            if (!zipCode.isNullOrEmpty()) {
+                viewModel.getPropertyByPincode(PropertyByPincodeRequest(zipCode))
+            }
+            var address = getAddressFromLatLong(latitude, longitude)
+            if (!address.isNullOrEmpty()) {
+                Log.e("PointerAddress", "Your Pincode ${zipCode} Your Pointer ${address}")
+                binding.contentLayout.homeTxtsearchview.setText(address)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+
+    fun addPropertyMarkerToMap(propertyData: PropertyDataResponse) {
+
+        val yourlocation = LatLng(propertyData.latitude, propertyData.longtitude)
         var markerData = MakerInfoData(
-            roomData.title,
-            roomData.location,
-            roomData.price
+            propertyData.property_type,
+            "${propertyData.plot_number} ${propertyData.street}",
+            getString(R.string.rupesssign) + " ${propertyData.price}" + getString(R.string.rupesending)
+
         )
         val gson = Gson()
         val markerInfoString = gson.toJson(markerData)
@@ -469,24 +550,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             MarkerOptions().position(yourlocation).snippet(markerInfoString)
                 .icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_singleroom))
         )
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15f));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(yourlocation, 15f))
-        getDetailsFromLatLong(roomData.latitude, roomData.longitude)
+
     }
 
     private fun BitmapFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
         val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
 
         vectorDrawable!!.setBounds(
-            0,
-            0,
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight
+            0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight
         )
         val bitmap = Bitmap.createBitmap(
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
+            vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888
         )
         val canvas = Canvas(bitmap)
         vectorDrawable.draw(canvas)
@@ -509,23 +583,27 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             " latitude ${latitude} longitude ${longitude} address ${address}  :: city ${city} state ${state} zip ${zip} country ${country} featureName ${featureName}"
         )
 
+
     }
 
-
-    fun addCircle(latitude: Double, longitude: Double) {
-        val circle = mMap.addCircle(
-            CircleOptions()
-                .center(LatLng(latitude, longitude))
-                .radius(100.0)
-                .strokeWidth(5f)
-                .strokeColor(Color.GREEN)
-                .fillColor(Color.argb(20, 100, 0, 0))
-                .clickable(true)
-        )
-        mMap.setOnCircleClickListener {
-            val strokeColor = it.strokeColor xor 0x00ffffff
-            it.strokeColor = strokeColor
+    fun getPincodeLatLong(latitude: Double, longitude: Double): String? {
+        val geocoder = Geocoder(applicationContext, Locale.getDefault())
+        val addresses: List<Address> = geocoder.getFromLocation(latitude, longitude, 1)
+        if (!addresses.isNullOrEmpty() && addresses.size > 0) {
+            val zip: String = addresses[0].postalCode
+            return zip
+        } else {
+            return null
         }
+    }
+
+    fun moveCameraToLocation(latitude: Double, longitude: Double) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), ZOOM_LEVEL))
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(ZOOM_LEVEL));
+    }
+
+    override fun onItemClick(item: RecentSearch, position: Int, type: Int) {
+        Toast.makeText(applicationContext, item.toString(), Toast.LENGTH_SHORT)
     }
 
 

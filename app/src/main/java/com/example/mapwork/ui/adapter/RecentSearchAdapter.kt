@@ -12,22 +12,23 @@ import com.example.mapwork.api.APIConstant.BASE_URL
 import com.example.mapwork.databinding.LayoutRoominfoShortBinding
 import com.example.mapwork.models.response.Image
 import com.example.mapwork.models.response.PropertyDataResponse
+import com.example.mapwork.models.response.RecentSearch
 
-class RoomShotAdapter(
+class RecentSearchAdapter(
     val context: Context,
-    val list: List<PropertyDataResponse>,
+    val list: List<RecentSearch>,
     val itemClickListener: OnItemClickListener
-) : RecyclerView.Adapter<RoomShotAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecentSearchAdapter.ViewHolder>() {
 
 
     interface OnItemClickListener {
-        fun onItemClick(item: PropertyDataResponse, position: Int, type: Int)
+        fun onItemClick(item: RecentSearch, position: Int, type: Int)
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_roominfo_short, parent, false)
+            .inflate(R.layout.layout_recent_search, parent, false)
         return ViewHolder(v)
     }
 
@@ -43,27 +44,17 @@ class RoomShotAdapter(
             itemClickListener.onItemClick(item, position, 0)
         }
 
-        holder.roomTitle.text = item.property_type
-        holder.roomlLcation.text = "${item.plot_number} , ${item.street} ${item.landmark}"
-        holder.roomPrice.text = context.getString(R.string.rupesssign)+" ${item.price}"+context.getString(R.string.rupesending)
-
-        if (!item.images.isNullOrEmpty() && item.images.size > 0) {
-            var imageUrl=BASE_URL+item.images.get(0).image
-            Log.d("IMAGEURL",imageUrl)
-            Glide.with(context)
-                .load(imageUrl)
-                .into(holder.roomImage)
-        }
+        holder.searchtitle.text = item.searchTitle
+        holder.searchLocation.text = item.searchLocation
+        holder.searchDistance.text = item.searchDistance
 
 
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val roomTitle = itemView.findViewById(R.id.room_txttitle) as TextView
-        val roomlLcation = itemView.findViewById(R.id.room_txtlocation) as TextView
-        val roomPrice = itemView.findViewById(R.id.room_txtprice) as TextView
-        val roomImage = itemView.findViewById(R.id.room_image) as ImageView
+        val searchtitle = itemView.findViewById(R.id.recent_search_title) as TextView
+        val searchLocation = itemView.findViewById(R.id.recent_search_location) as TextView
+        val searchDistance = itemView.findViewById(R.id.recent_search_distance) as TextView
 
     }
 

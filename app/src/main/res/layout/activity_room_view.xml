@@ -12,53 +12,53 @@
         android:layout_height="match_parent"
         tools:context=".ui.activity.RoomViewActivity">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@id/room_view_rentbtn"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp">
-
-                <com.smarteist.autoimageslider.SliderView
-                    android:id="@+id/room_viewbanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorTheme"
-                    app:sliderAnimationDuration="600"
-                    app:sliderAutoCycleDirection="back_and_forth"
-                    app:sliderAutoCycleEnabled="true"
-                    app:sliderIndicatorAnimationDuration="1000"
-                    app:sliderIndicatorGravity="left|bottom"
-                    app:sliderIndicatorMargin="15dp"
-                    app:sliderIndicatorOrientation="horizontal"
-                    app:sliderIndicatorPadding="3dp"
-                    app:sliderIndicatorRadius="1dp"
-                    app:sliderIndicatorSelectedColor="@color/colorPrimary"
-                    app:sliderIndicatorUnselectedColor="@color/colorTheme"
-                    app:sliderScrollTimeInSec="1"
-                    app:sliderStartAutoCycle="true" />
-
-
-                <in.probusinsurance.probusdesign.ui.button.ImageButton
-                    android:id="@+id/room_view_fullscreen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:padding="@dimen/margin_10dp"
-                    app:srcCompat="@drawable/ic_fullscreen"
-                    app:tint="@color/white" />
-
-            </RelativeLayout>
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_10dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp">
+
+                    <com.smarteist.autoimageslider.SliderView
+                        android:id="@+id/room_viewbanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorTheme"
+                        app:sliderAnimationDuration="1000"
+                        app:sliderAutoCycleDirection="back_and_forth"
+                        app:sliderAutoCycleEnabled="true"
+                        app:sliderIndicatorAnimationDuration="1000"
+                        app:sliderIndicatorGravity="left|bottom"
+                        app:sliderIndicatorMargin="15dp"
+                        app:sliderIndicatorOrientation="horizontal"
+                        app:sliderIndicatorPadding="3dp"
+                        app:sliderIndicatorRadius="1dp"
+                        app:sliderIndicatorSelectedColor="@color/colorPrimary"
+                        app:sliderIndicatorUnselectedColor="@color/colorTheme"
+                        app:sliderScrollTimeInSec="1"
+                        app:sliderStartAutoCycle="true" />
+
+
+                    <in.probusinsurance.probusdesign.ui.button.ImageButton
+                        android:id="@+id/room_view_fullscreen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:padding="@dimen/margin_10dp"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_fullscreen"
+                        app:tint="@color/white" />
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,134 +68,192 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_10dp">
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-
-                            <in.probusinsurance.probusdesign.ui.textview.TextViewLargeHeading
-                                android:id="@+id/room_txttitle"
+                            <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true"
-                                android:layout_toLeftOf="@id/room_favoriteicon"
-                                android:text="Rajput Rooms" />
+                                android:layout_height="wrap_content">
 
-                            <in.probusinsurance.probusdesign.ui.button.ImageButton
-                                android:id="@+id/room_favoriteicon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:padding="@dimen/margin_5dp"
-                                app:srcCompat="@drawable/ic_favorite" />
-                        </RelativeLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toLeftOf="@id/room_view_favoriteicon"
+                                    android:orientation="vertical">
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                                    <in.probusinsurance.probusdesign.ui.textview.TextViewLargeHeading
+                                        android:id="@+id/room_view_txttitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:layout_centerVertical="true"
+                                        android:text="Rajput Rooms" />
+
+                                    <in.probusinsurance.probusdesign.ui.textview.TextViewSubHeadingLarge
+                                        android:id="@+id/room_view_txtlocation"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:layout_centerVertical="true"
+                                        android:text="Pno 203 Rajput colony jhalana gram , 302020" />
 
 
-                            <in.probusinsurance.probusdesign.ui.textview.TextViewSubHeadingLarge
-                                android:id="@+id/room_txtlocation"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true"
-                                android:layout_toLeftOf="@id/room_locationicon"
-                                android:text="Pno 203 Rajput colony jhalana gram , 302020" />
+                                </LinearLayout>
 
-                            <in.probusinsurance.probusdesign.ui.button.ImageButton
-                                android:id="@+id/room_locationicon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:padding="@dimen/margin_5dp"
-                                app:srcCompat="@drawable/ic_location" />
 
-                        </RelativeLayout>
+                                <in.probusinsurance.probusdesign.ui.button.ImageButton
+                                    android:id="@+id/room_view_favoriteicon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:padding="@dimen/margin_5dp"
+                                    app:srcCompat="@drawable/ic_favorite" />
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
 
-
-                </LinearLayout>
-
-                <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_5dp"
-                    android:text="Features" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
-
-                    <ImageView
-                        android:padding="@dimen/margin_5dp"
-                        android:layout_width="wrap_content"
+                    <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_water" />
+                        android:padding="@dimen/margin_10dp"
+                        android:text="@string/about" />
 
-                    <ImageView
-                        android:padding="@dimen/margin_5dp"
-                        android:layout_width="wrap_content"
+                    <in.probusinsurance.probusdesign.ui.textview.TextViewSubHeadingLarge
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_cleaning_services" />
 
-                    <ImageView
-                        android:padding="@dimen/margin_5dp"
-                        android:layout_width="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/margin_10dp"
+                        android:text="@string/RoomDiscription" />
+
+
+                    <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_electricity" />
+                        android:padding="@dimen/margin_10dp"
+                        android:text="Features" />
 
-                    <ImageView
-                        android:padding="@dimen/margin_5dp"
-                        android:layout_width="wrap_content"
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.cardview.widget.CardView
+                            style="@style/CardViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_gravity="right">
+
+                            <in.probusinsurance.probusdesign.ui.button.ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_10dp"
+                                app:srcCompat="@drawable/ic_water" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            style="@style/CardViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_gravity="right">
+
+                            <in.probusinsurance.probusdesign.ui.button.ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_10dp"
+                                app:srcCompat="@drawable/ic_cleaning_services" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            style="@style/CardViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_gravity="right">
+
+                            <in.probusinsurance.probusdesign.ui.button.ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_10dp"
+                                app:srcCompat="@drawable/ic_electricity" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            style="@style/CardViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_gravity="right">
+
+                            <in.probusinsurance.probusdesign.ui.button.ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_10dp"
+                                app:srcCompat="@drawable/ic_fan_" />
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <in.probusinsurance.probusdesign.ui.textview.TextViewSubHeadingSmall
+                        android:id="@+id/room_view_txtdate"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_fan_" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:orientation="horizontal">
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        app:srcCompat="@drawable/ic_person" />
+                        android:padding="@dimen/margin_10dp"
+                        android:text="12 Aug 2022" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/margin_5dp">
+                        android:orientation="horizontal"
+                        android:padding="@dimen/margin_10dp">
 
-                        <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_profile_photo" />
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Aditya Jha" />
+                            android:orientation="vertical"
+                            android:padding="@dimen/margin_5dp">
 
-                        <in.probusinsurance.probusdesign.ui.textview.TextViewSubHeadingLight
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Owner" />
+                            <in.probusinsurance.probusdesign.ui.textview.TextViewSmallHeading
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Rental Team" />
+
+                            <in.probusinsurance.probusdesign.ui.textview.TextViewSubHeadingSmall
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Owner" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
-
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <in.probusinsurance.probusdesign.ui.button.ButtonFlat
             android:id="@+id/room_view_rentbtn"
@@ -203,7 +261,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="Rent 5000/- month "
+            android:text="Pay ₹ 2500/- Month "
             app:isactiveflatbutton="true" />
     </RelativeLayout>
 </layout>

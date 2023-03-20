@@ -25,15 +25,20 @@ class InfoWindowAdapter(mContext: Context) : GoogleMap.InfoWindowAdapter {
 
     override fun getInfoWindow(marker: Marker): View? {
 
-        val gson = Gson()
-        val aMarkerInfo: MakerInfoData = gson.fromJson(marker.snippet, MakerInfoData::class.java)
+        if (!marker.snippet.isNullOrEmpty()) {
+            val gson = Gson()
+            val aMarkerInfo: MakerInfoData =
+                gson.fromJson(marker.snippet, MakerInfoData::class.java)
 
-        val tvName = mWindow.findViewById<TextView>(R.id.room_makername)
-        val tvLocation = mWindow.findViewById<TextView>(R.id.room_makerlocation)
-        val tvPrice = mWindow.findViewById<TextView>(R.id.room_makerprice)
-        tvName.text = aMarkerInfo.title
-        tvLocation.text = aMarkerInfo.subtitle
-        tvPrice.text = aMarkerInfo.price
-        return mWindow
+            val tvName = mWindow.findViewById<TextView>(R.id.room_makername)
+            val tvLocation = mWindow.findViewById<TextView>(R.id.room_makerlocation)
+            val tvPrice = mWindow.findViewById<TextView>(R.id.room_makerprice)
+            tvName.text = aMarkerInfo.title
+            tvLocation.text = aMarkerInfo.subtitle
+            tvPrice.text = aMarkerInfo.price
+            return mWindow
+        } else {
+            return null
+        }
     }
 }

@@ -15,6 +15,8 @@ import com.bumptech.glide.request.RequestListener
 import com.example.mapwork.Banner
 import com.example.mapwork.R
 import com.example.mapwork.Room
+import com.example.mapwork.api.APIConstant
+import com.example.mapwork.api.APIConstant.BASE_URL
 import com.smarteist.autoimageslider.SliderView
 import com.smarteist.autoimageslider.SliderViewAdapter
 
@@ -30,7 +32,8 @@ class BannerAdapter(var context: Context, var banneritem: Banner) :
     }
 
     override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
-        val imageUrl: String = banneritem.imageUrl.get(position)
+
+        val imageUrl: String = BASE_URL +banneritem.imageUrl.get(position).image
 
         Glide.with(context).load(imageUrl)
             .listener(object : RequestListener<Drawable> {

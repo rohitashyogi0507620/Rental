@@ -1,3 +1,5 @@
 package com.example.mapwork
 
-data class Banner(var imageUrl: List<String>)
+import com.example.mapwork.models.response.Image
+
+data class Banner(var imageUrl: List<Image>)

@@ -94,26 +94,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
 
     }
 
-    fun bottomSheetDialog() {
-        var dialog = Dialog(this)
-        dialog.setContentView(R.layout.layout_room_full_view)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-
-        var banneritem=Banner(listOf(
-            "https://media-cdn.tripadvisor.com/media/photo-s/13/d8/ea/1b/a-room-at-the-beach.jpg",
-            "https://media-cdn.tripadvisor.com/media/photo-s/15/ca/5c/f5/ruby-room.jpg",
-            "https://media-cdn.tripadvisor.com/media/photo-s/0d/e6/a1/55/ruby-room.jpg"))
-
-        var banner=dialog.findViewById<SliderView>(R.id.room_banner)
-        banner.setSliderAdapter(BannerAdapter(applicationContext,banneritem))
-        banner.setIndicatorAnimation(IndicatorAnimationType.WORM);
-        banner.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        banner.startAutoCycle()
-        dialog.show()
-
-    }
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         // Add a marker in Sydney and move the camera

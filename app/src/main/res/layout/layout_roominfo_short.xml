@@ -11,9 +11,9 @@
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
+            style="@style/CardViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/CardViewStyle">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,61 +44,53 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-
-                            <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
-                                android:id="@+id/room_txttitle"
-                                android:layout_centerVertical="true"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
                                 android:layout_toLeftOf="@id/room_favoriteicon"
-                                android:text="Rajput Rooms" />
+                                android:orientation="vertical">
+
+                                <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
+                                    android:id="@+id/room_txttitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Rajput Rooms" />
+
+                                <in.probusinsurance.probusdesign.ui.textview.TextViewSubHeadingSmall
+                                    android:id="@+id/room_txtlocation"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Pno 203 Rajput colony jhalana gram , 302020" />
+
+
+                                <in.probusinsurance.probusdesign.ui.textview.TextViewMediumHeading
+                                    android:id="@+id/room_txtprice"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toLeftOf="@id/room_favoriteicon"
+                                    android:text="₹ 2500/- "
+                                    app:customColor="@color/colorPrimary"
+                                    app:customColorEnable="true" />
+
+                            </LinearLayout>
+
 
                             <in.probusinsurance.probusdesign.ui.button.ImageButton
                                 android:id="@+id/room_favoriteicon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
                                 android:padding="@dimen/margin_5dp"
                                 app:srcCompat="@drawable/ic_favorite" />
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
 
-
-                            <in.probusinsurance.probusdesign.ui.textview.TextViewSubHeadingSmall
-                                android:layout_centerVertical="true"
-                                android:id="@+id/room_txtlocation"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_toLeftOf="@id/room_locationicon"
-                                android:text="Pno 203 Rajput colony jhalana gram , 302020" />
-
-                            <in.probusinsurance.probusdesign.ui.button.ImageButton
-                                android:id="@+id/room_locationicon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:padding="@dimen/margin_5dp"
-                                app:srcCompat="@drawable/ic_location" />
-
-                        </RelativeLayout>
-
-
-                        <in.probusinsurance.probusdesign.ui.button.ButtonRound
-                            android:id="@+id/room_pricebtn"
-                            android:layout_width="match_parent"
-                            app:isactive="true"
-                            android:layout_height="wrap_content"
-                            android:text="Book 3200/- "
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
                     </LinearLayout>
 
                 </LinearLayout>
